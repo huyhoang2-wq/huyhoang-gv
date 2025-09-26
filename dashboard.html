@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduAssistant Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">EduAssistant Pro</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Trang Chủ</a>
+                    <a href="dashboard.html" class="text-blue-600 font-semibold">Dashboard</a>
+                    <a href="lesson-planner.html" class="text-gray-700 hover:text-blue-600 transition-colors">Lập Kế Hoạch</a>
+                    <a href="resources.html" class="text-gray-700 hover:text-blue-600 transition-colors">Tài Nguyên</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <div class="pt-16 min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Bảng Điều Khiển</h1>
+                <p class="text-gray-600">Chào mừng bạn quay trở lại! Cùng xem lớp học của bạn hôm nay nhé.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-sm hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Tổng Học Sinh</p>
+                            <p class="text-3xl font-bold text-gray-800" id="total-students">156</p>
+                            <p class="text-green-500 text-sm mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>+12 so với tuần trước
+                            </p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Bài Học Hôm Nay</p>
+                            <p class="text-3xl font-bold text-gray-800">4</p>
+                            <p class="text-blue-500 text-sm mt-1">
+                                <i class="fas fa-clock mr-1"></i>3 chưa bắt đầu
+                            </p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-book text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Tỷ Lệ Tham Gia</p>
+                            <p class="text-3xl font-bold text-gray-800">94%</p>
+                            <p class="text-green-500 text-sm mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>+2% so với tuần trước
+                            </p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Bài Tập Chưa Chấm</p>
+                            <p class="text-3xl font-bold text-gray-800">23</p>
+                            <p class="text-orange-500 text-sm mt-1">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>Cần chú ý
+                            </p>
+                        </div>
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-orange-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Today's Classes -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold text-gray-800">Lịch Học Hôm Nay</h2>
+                            <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                                Xem tất cả <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4" id="today-classes">
+                            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-microchip text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-800">Điện Tử Cơ Bản</h3>
+                                    <p class="text-gray-600 text-sm">Lớp ĐT01 - Phòng 301</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-600">08:00 - 09:30</p>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Đang diễn ra</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-cog text-green-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-800">Cơ Khí Chính Xác</h3>
+                                    <p class="text-gray-600 text-sm">Lớp CK02 - Phòng 105</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-600">10:00 - 11:30</p>
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Sắp bắt đầu</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-laptop-code text-purple-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-800">Lập Trình Web</h3>
+                                    <p class="text-gray-600 text-sm">Lớp IT03 - Phòng 405</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-600">14:00 - 15:30</p>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">Chưa bắt đầu</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Hiệu Suất Học Tập</h2>
+                        <div id="performance-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-8">
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Hành Động Nhanh</h2>
+                        <div class="space-y-3">
+                            <button onclick="showNotification('Đang mở công cụ tạo bài học...')" 
+                                    class="w-full flex items-center space-x-3 p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                                <i class="fas fa-plus text-blue-600"></i>
+                                <span class="text-gray-800">Tạo Bài Học Mới</span>
+                            </button>
+                            <button onclick="showNotification('Đang mở quản lý lớp học...')" 
+                                    class="w-full flex items-center space-x-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                                <i class="fas fa-users text-green-600"></i>
+                                <span class="text-gray-800">Quản Lý Lớp Học</span>
+                            </button>
+                            <button onclick="showNotification('Đang mở công cụ chấm điểm...')" 
+                                    class="w-full flex items-center space-x-3 p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+                                <i class="fas fa-clipboard-check text-purple-600"></i>
+                                <span class="text-gray-800">Chấm Bài Tập</span>
+                            </button>
+                            <button onclick="showNotification('Đang gửi thông báo...')" 
+                                    class="w-full flex items-center space-x-3 p-3 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors">
+                                <i class="fas fa-bell text-orange-600"></i>
+                                <span class="text-gray-800">Gửi Thông Báo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Hoạt Động Gần Đây</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user text-blue-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-800">Nguyễn Văn A đã nộp bài tập</p>
+                                    <p class="text-xs text-gray-500">2 phút trước</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check text-green-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-800">Lớp ĐT01 đã hoàn thành bài kiểm tra</p>
+                                    <p class="text-xs text-gray-500">15 phút trước</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-comment text-purple-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-800">Có 5 tin nhắn mới từ phụ huynh</p>
+                                    <p class="text-xs text-gray-500">1 giờ trước</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Assistant -->
+                    <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-robot text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">AI Assistant</h3>
+                                <p class="text-sm text-blue-100">Luôn sẵn sàng hỗ trợ</p>
+                            </div>
+                        </div>
+                        <p class="text-blue-100 mb-4">Cần giúp đỡ với bài học hôm nay? Tôi có thể giúp bạn tạo kế hoạch, chấm bài hoặc tương tác với học sinh.</p>
+                        <button onclick="showNotification('AI Assistant đang kết nối...')" 
+                                class="w-full bg-white text-blue-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-comments mr-2"></i>
+                            Trò Chuyện Ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+            updateRealTimeData();
+            setInterval(updateRealTimeData, 5000);
+        });
+
+        // Initialize performance chart
+        function initializeChart() {
+            const chartDom = document.getElementById('performance-chart');
+            const myChart = echarts.init(chartDom);
+
+            const option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['Tham Gia', 'Hoàn Thành Bài Tập', 'Điểm Trung Bình']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'Tham Gia',
+                        type: 'line',
+                        stack: 'Total',
+                        data: [92, 95, 88, 94, 96, 93, 91],
+                        itemStyle: { color: '#3B82F6' }
+                    },
+                    {
+                        name: 'Hoàn Thành Bài Tập',
+                        type: 'line',
+                        stack: 'Total',
+                        data: [85, 88, 82, 89, 91, 87, 84],
+                        itemStyle: { color: '#10B981' }
+                    },
+                    {
+                        name: 'Điểm Trung Bình',
+                        type: 'line',
+                        stack: 'Total',
+                        data: [7.5, 7.8, 7.2, 7.9, 8.1, 7.7, 7.6],
+                        itemStyle: { color: '#8B5CF6' }
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
+
+        // Update real-time data
+        function updateRealTimeData() {
+            // Simulate real-time updates
+            const elements = {
+                totalStudents: document.getElementById('total-students'),
+                // Add more elements as needed
+            };
+
+            // Update student count with small random changes
+            if (elements.totalStudents) {
+                const currentCount = parseInt(elements.totalStudents.textContent);
+                const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+                const newCount = Math.max(150, currentCount + change);
+                elements.totalStudents.textContent = newCount;
+            }
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

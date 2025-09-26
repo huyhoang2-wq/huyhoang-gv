@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập Kế Hoạch Bài Học - EduAssistant Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .lesson-step { border-left: 4px solid #E5E7EB; }
+        .lesson-step.active { border-left-color: #3B82F6; background-color: #EFF6FF; }
+        .lesson-step.completed { border-left-color: #10B981; background-color: #F0FDF4; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">EduAssistant Pro</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Trang Chủ</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 transition-colors">Dashboard</a>
+                    <a href="lesson-planner.html" class="text-blue-600 font-semibold">Lập Kế Hoạch</a>
+                    <a href="resources.html" class="text-gray-700 hover:text-blue-600 transition-colors">Tài Nguyên</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Lập Kế Hoạch Bài Học</h1>
+                <p class="text-gray-600">Tạo bài học chuyên nghiệp với sự hỗ trợ của AI</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Column - Lesson Builder -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Lesson Form -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Thông Tin Bài Học</h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tên Bài Học</label>
+                                <input type="text" id="lesson-title" placeholder="Nhập tên bài học..." 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Môn Học</label>
+                                <select id="lesson-subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Chọn môn học</option>
+                                    <option value="electrical">Điện Tử</option>
+                                    <option value="mechanical">Cơ Khí</option>
+                                    <option value="it">Công Nghệ Thông Tin</option>
+                                    <option value="cooking">Nấu Ăn</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lớp</label>
+                                <select id="lesson-class" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Chọn lớp</option>
+                                    <option value="dt01">ĐT01</option>
+                                    <option value="ck02">CK02</option>
+                                    <option value="it03">IT03</option>
+                                    <option value="na04">NA04</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ThờI Lượng</label>
+                                <select id="lesson-duration" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="45">45 phút</option>
+                                    <option value="90">90 phút</option>
+                                    <option value="135">135 phút</option>
+                                    <option value="180">180 phút</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mục Tiêu Bài Học</label>
+                            <textarea id="lesson-objectives" placeholder="Mô tả mục tiêu bài học..." rows="3"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+
+                        <div class="mt-6 flex space-x-4">
+                            <button onclick="generateLessonPlan()" 
+                                    class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-magic mr-2"></i>
+                                Tạo Với AI
+                            </button>
+                            <button onclick="saveLessonPlan()" 
+                                    class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
+                                <i class="fas fa-save mr-2"></i>
+                                Lưu Nháp
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Generated Lesson Plan -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm" id="lesson-plan-result" style="display: none;">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Kế Hoạch Bài Học</h2>
+                        
+                        <div id="lesson-content">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+
+                        <div class="mt-6 flex space-x-4">
+                            <button onclick="exportLessonPlan()" 
+                                    class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                                <i class="fas fa-download mr-2"></i>
+                                Xuất PDF
+                            </button>
+                            <button onclick="shareLessonPlan()" 
+                                    class="bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                                <i class="fas fa-share mr-2"></i>
+                                Chia Sẻ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Tools & Templates -->
+                <div class="space-y-6">
+                    <!-- Quick Templates -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Mẫu Có Sẵn</h3>
+                        <div class="space-y-3">
+                            <button onclick="loadTemplate('basic')" 
+                                    class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                                <div class="font-medium text-gray-800">Bài Học Cơ Bản</div>
+                                <div class="text-sm text-gray-600">Giới thiệu và thực hành</div>
+                            </button>
+                            <button onclick="loadTemplate('practical')" 
+                                    class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                                <div class="font-medium text-gray-800">Thực Hành</div>
+                                <div class="text-sm text-gray-600">Tập trung vào kỹ năng</div>
+                            </button>
+                            <button onclick="loadTemplate('theory')" 
+                                    class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                                <div class="font-medium text-gray-800">Lý Thuyết</div>
+                                <div class="text-sm text-gray-600">Giảng dạy khái niệm</div>
+                            </button>
+                            <button onclick="loadTemplate('project')" 
+                                    class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                                <div class="font-medium text-gray-800">Dự Án</div>
+                                <div class="text-sm text-gray-600">Làm việc theo nhóm</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Suggestions -->
+                    <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Gợi Ý Từ AI</h3>
+                                <p class="text-sm text-blue-100">Tối ưu hóa bài học</p>
+                            </div>
+                        </div>
+                        <div id="ai-suggestions" class="space-y-3">
+                            <div class="p-3 bg-white/20 rounded-lg">
+                                <p class="text-sm">Thêm hoạt động nhóm để tăng tương tác</p>
+                            </div>
+                            <div class="p-3 bg-white/20 rounded-lg">
+                                <p class="text-sm">Sử dụng video minh họa cho phần lý thuyết</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resource Library -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Tài Nguyên Gợi Ý</h3>
+                        <div class="space-y-3" id="suggested-resources">
+                            <!-- Will be populated based on subject selection -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample lesson templates
+        const lessonTemplates = {
+            basic: {
+                title: "Bài Học Cơ Bản",
+                structure: [
+                    { phase: "Mở Đầu", duration: "10 phút", activities: ["Chào hỏi", "Kiểm tra sĩ số", "Giới thiệu bài học"] },
+                    { phase: "Lý Thuyết", duration: "20 phút", activities: ["Trình bày khái niệm", "Ví dụ minh họa", "Hỏi đáp"] },
+                    { phase: "Thực Hành", duration: "10 phút", activities: ["Bài tập áp dụng", "Hướng dẫn chi tiết"] },
+                    { phase: "Kết Thúc", duration: "5 phút", activities: ["Tổng kết", "Giao bài tập về nhà", "Thông báo buổi sau"] }
+                ]
+            },
+            practical: {
+                title: "Bài Thực Hành",
+                structure: [
+                    { phase: "Chuẩn Bị", duration: "15 phút", activities: ["Kiểm tra dụng cụ", "An toàn lao động", "Phân công nhóm"] },
+                    { phase: "Thực Hành", duration: "25 phút", activities: ["Thao tác thực tế", "Giám sát hướng dẫn", "Ghi chép quá trình"] },
+                    { phase: "Đánh Giá", duration: "5 phút", activities: ["Kiểm tra kết quả", "Nhận xét hiệu quả"] }
+                ]
+            }
+        };
+
+        // Resource suggestions by subject
+        const subjectResources = {
+            electrical: [
+                { title: "Sơ Đồ Mạch Điện", type: "PDF", icon: "fas fa-file-pdf" },
+                { title: "Video An Toàn Điện", type: "Video", icon: "fas fa-video" },
+                { title: "Bài Tập Thực Hành", type: "Interactive", icon: "fas fa-mouse-pointer" }
+            ],
+            mechanical: [
+                { title: "Bản Vẽ Kỹ Thuật", type: "PDF", icon: "fas fa-file-pdf" },
+                { title: "Hướng Dẫn Vận Hành Máy", type: "Video", icon: "fas fa-video" },
+                { title: "Bài Tập Đo Lường", type: "Interactive", icon: "fas fa-mouse-pointer" }
+            ],
+            it: [
+                { title: "Code Examples", type: "GitHub", icon: "fab fa-github" },
+                { title: "Tutorial Video", type: "Video", icon: "fas fa-video" },
+                { title: "Practice Exercises", type: "Interactive", icon: "fas fa-mouse-pointer" }
+            ],
+            cooking: [
+                { title: "Công Thức Nấu Ăn", type: "PDF", icon: "fas fa-file-pdf" },
+                { title: "Kỹ Thuật Chế Biến", type: "Video", icon: "fas fa-video" },
+                { title: "Bài Tập Nấu Ăn", type: "Interactive", icon: "fas fa-mouse-pointer" }
+            ]
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+        });
+
+        function initializeEventListeners() {
+            // Update suggestions when subject changes
+            document.getElementById('lesson-subject').addEventListener('change', updateResourceSuggestions);
+        }
+
+        function updateResourceSuggestions() {
+            const subject = document.getElementById('lesson-subject').value;
+            const container = document.getElementById('suggested-resources');
+            
+            if (subject && subjectResources[subject]) {
+                container.innerHTML = subjectResources[subject].map(resource => `
+                    <div class="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg">
+                        <i class="${resource.icon} text-gray-600"></i>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">${resource.title}</p>
+                            <p class="text-xs text-gray-600">${resource.type}</p>
+                        </div>
+                        <button class="text-blue-500 hover:text-blue-600">
+                            <i class="fas fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="text-gray-500 text-sm">Chọn môn học để xem tài nguyên gợi ý</p>';
+            }
+        }
+
+        function loadTemplate(templateType) {
+            if (lessonTemplates[templateType]) {
+                const template = lessonTemplates[templateType];
+                document.getElementById('lesson-title').value = template.title;
+                showNotification(`Đã tải mẫu: ${template.title}`);
+            }
+        }
+
+        function generateLessonPlan() {
+            const title = document.getElementById('lesson-title').value;
+            const subject = document.getElementById('lesson-subject').value;
+            const className = document.getElementById('lesson-class').value;
+            const duration = document.getElementById('lesson-duration').value;
+            const objectives = document.getElementById('lesson-objectives').value;
+
+            if (!title || !subject || !className) {
+                showNotification('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            // Simulate AI generation
+            showNotification('AI đang tạo kế hoạch bài học...');
+            
+            setTimeout(() => {
+                displayGeneratedLesson(title, subject, className, duration, objectives);
+            }, 2000);
+        }
+
+        function displayGeneratedLesson(title, subject, className, duration, objectives) {
+            const resultDiv = document.getElementById('lesson-plan-result');
+            const contentDiv = document.getElementById('lesson-content');
+            
+            const lessonPlan = generateLessonPlanContent(title, subject, className, duration, objectives);
+            
+            contentDiv.innerHTML = lessonPlan;
+            resultDiv.style.display = 'block';
+            
+            // Animate the appearance
+            anime({
+                targets: resultDiv,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 600,
+                easing: 'easeOutQuad'
+            });
+            
+            showNotification('Đã tạo xong kế hoạch bài học!');
+        }
+
+        function generateLessonPlanContent(title, subject, className, duration, objectives) {
+            const durationMinutes = parseInt(duration);
+            const phases = [
+                { name: 'Mở Đầu', time: Math.floor(durationMinutes * 0.15), activities: ['Chào hỏi', 'Kiểm tra sĩ số', 'Giới thiệu mục tiêu'] },
+                { name: 'Lý Thuyết', time: Math.floor(durationMinutes * 0.4), activities: ['Trình bày nội dung chính', 'Ví dụ minh họa', 'Hỏi đáp'] },
+                { name: 'Thực Hành', time: Math.floor(durationMinutes * 0.3), activities: ['Bài tập áp dụng', 'Hướng dẫn thực hành', 'Kiểm tra kết quả'] },
+                { name: 'Kết Thúc', time: Math.floor(durationMinutes * 0.15), activities: ['Tổng kết bài học', 'Giao bài tập về nhà', 'Thông báo buổi sau'] }
+            ];
+
+            return `
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">${title}</h3>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-600 mb-4">
+                        <div><strong>Môn:</strong> ${getSubjectName(subject)}</div>
+                        <div><strong>Lớp:</strong> ${className.toUpperCase()}</div>
+                        <div><strong>ThờI gian:</strong> ${duration} phút</div>
+                    </div>
+                    ${objectives ? `<p class="text-gray-600 mb-4"><strong>Mục tiêu:</strong> ${objectives}</p>` : ''}
+                </div>
+
+                <div class="space-y-4">
+                    ${phases.map((phase, index) => `
+                        <div class="lesson-step active p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-semibold text-gray-800">${index + 1}. ${phase.name}</h4>
+                                <span class="text-sm text-gray-600">${phase.time} phút</span>
+                            </div>
+                            <ul class="space-y-1">
+                                ${phase.activities.map(activity => `
+                                    <li class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        ${activity}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 class="font-semibold text-blue-800 mb-2">Tài Nguyên Cần Chuẩn Bị:</h4>
+                    <ul class="text-sm text-blue-700 space-y-1">
+                        <li>• Slide trình chiếu</li>
+                        <li>• Tài liệu học tập</li>
+                        <li>• Dụng cụ thực hành</li>
+                        <li>• Bài tập áp dụng</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function getSubjectName(subject) {
+            const names = {
+                electrical: 'Điện Tử',
+                mechanical: 'Cơ Khí',
+                it: 'Công Nghệ Thông Tin',
+                cooking: 'Nấu Ăn'
+            };
+            return names[subject] || subject;
+        }
+
+        function saveLessonPlan() {
+            showNotification('Đã lưu nháp bài học!');
+        }
+
+        function exportLessonPlan() {
+            showNotification('Đang xuất bài học ra PDF...');
+            setTimeout(() => {
+                showNotification('Đã xuất PDF thành công!');
+            }, 2000);
+        }
+
+        function shareLessonPlan() {
+            showNotification('Đang chia sẻ bài học...');
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Nguyên Giáo Dục - EduAssistant Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .resource-card { background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">EduAssistant Pro</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Trang Chủ</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 transition-colors">Dashboard</a>
+                    <a href="lesson-planner.html" class="text-gray-700 hover:text-blue-600 transition-colors">Lập Kế Hoạch</a>
+                    <a href="resources.html" class="text-blue-600 font-semibold">Tài Nguyên</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Thư Viện Tài Nguyên</h1>
+                <p class="text-gray-600">Khám phá hàng nghìn tài nguyên giáo dục được chọn lọc cho giảng dạy nghề nghiệp</p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Search Bar -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" id="main-search" placeholder="Tìm kiếm tài nguyên..." 
+                                   class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="flex flex-wrap gap-3">
+                        <select id="category-filter" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="all">Tất Cả Danh Mục</option>
+                            <option value="electrical">Điện Tử</option>
+                            <option value="mechanical">Cơ Khí</option>
+                            <option value="it">Công Nghệ Thông Tin</option>
+                            <option value="cooking">Nấu Ăn</option>
+                        </select>
+                        
+                        <select id="type-filter" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="all">Tất Cả Định Dạng</option>
+                            <option value="pdf">PDF</option>
+                            <option value="video">Video</option>
+                            <option value="interactive">Interactive</option>
+                            <option value="simulation">Simulation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Popular Tags -->
+                <div class="mt-4">
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-sm text-gray-600 mr-3">Từ khóa phổ biến:</span>
+                        <button onclick="searchByTag('an toàn lao động')" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200">an toàn lao động</button>
+                        <button onclick="searchByTag('kỹ năng cơ bản')" class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200">kỹ năng cơ bản</button>
+                        <button onclick="searchByTag('chứng chỉ')" class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm hover:bg-purple-200">chứng chỉ</button>
+                        <button onclick="searchByTag('thực hành')" class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm hover:bg-orange-200">thực hành</button>
+                        <button onclick="searchByTag('công nghệ mới')" class="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm hover:bg-pink-200">công nghệ mới</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Resources -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Tài Nguyên Nổi Bật</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="featured-resources">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- All Resources -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Tất Cả Tài Nguyên</h2>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600" id="resource-count">Hiển thị 1-12 của 156 tài nguyên</span>
+                        <select id="sort-by" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="newest">Mới Nhất</option>
+                            <option value="popular">Phổ Biến Nhất</option>
+                            <option value="rating">Đánh Giá Cao</option>
+                            <option value="name">Tên A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="all-resources">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-center space-x-2">
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600 disabled:opacity-50" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="px-3 py-2 bg-blue-500 text-white rounded">1</button>
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600">2</button>
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600">3</button>
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600">4</button>
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600">5</button>
+                <button class="px-3 py-2 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample resources data
+        const resourcesData = [
+            {
+                id: 1,
+                title: "Hướng Dẫn An Toàn Điện Cơ Bản",
+                description: "Tài liệu đầy đủ về an toàn lao động trong ngành điện",
+                category: "electrical",
+                type: "pdf",
+                size: "2.5 MB",
+                downloads: 1250,
+                rating: 4.8,
+                featured: true,
+                tags: ["an toàn lao động", "điện cơ bản"],
+                icon: "fas fa-bolt"
+            },
+            {
+                id: 2,
+                title: "Vận Hành Máy Tiện CNC",
+                description: "Video hướng dẫn chi tiết vận hành máy tiện CNC",
+                category: "mechanical",
+                type: "video",
+                size: "156 MB",
+                downloads: 890,
+                rating: 4.9,
+                featured: true,
+                tags: ["kỹ năng cơ bản", "cơ khí"],
+                icon: "fas fa-cog"
+            },
+            {
+                id: 3,
+                title: "Lập Trình Web Với React",
+                description: "Khóa học complete về React cho ngườI mới bắt đầu",
+                category: "it",
+                type: "interactive",
+                size: "N/A",
+                downloads: 2100,
+                rating: 4.7,
+                featured: true,
+                tags: ["công nghệ mới", "lập trình"],
+                icon: "fas fa-code"
+            },
+            {
+                id: 4,
+                title: "Kỹ Thuật Nấu Phở Truyền Thống",
+                description: "Bí quyết nấu phở từ các đầu bếp nổi tiếng",
+                category: "cooking",
+                type: "pdf",
+                size: "5.2 MB",
+                downloads: 750,
+                rating: 4.6,
+                featured: true,
+                tags: ["món truyền thống", "kỹ thuật"],
+                icon: "fas fa-utensils"
+            },
+            {
+                id: 5,
+                title: "Sơ Đồ Mạch Điện Tử",
+                description: "Bộ sưu tập sơ đồ mạch điện tử thông dụng",
+                category: "electrical",
+                type: "pdf",
+                size: "8.1 MB",
+                downloads: 650,
+                rating: 4.5,
+                featured: false,
+                tags: ["mạch điện", "thiết kế"],
+                icon: "fas fa-microchip"
+            },
+            {
+                id: 6,
+                title: "Bảo Trì Máy Công Cụ",
+                description: "Hướng dẫn bảo trì và sửa chữa máy công cụ",
+                category: "mechanical",
+                type: "video",
+                size: "234 MB",
+                downloads: 420,
+                rating: 4.4,
+                featured: false,
+                tags: ["bảo trì", "sửa chữa"],
+                icon: "fas fa-wrench"
+            },
+            {
+                id: 7,
+                title: "Python Cho NgườI Mới Bắt Đầu",
+                description: "Học lập trình Python từ cơ bản đến nâng cao",
+                category: "it",
+                type: "interactive",
+                size: "N/A",
+                downloads: 1800,
+                rating: 4.8,
+                featured: false,
+                tags: ["lập trình", "python"],
+                icon: "fab fa-python"
+            },
+            {
+                id: 8,
+                title: "Công Thức Bánh Ngọt",
+                description: "50 công thức bánh ngọt phổ biến",
+                category: "cooking",
+                type: "pdf",
+                size: "3.7 MB",
+                downloads: 920,
+                rating: 4.3,
+                featured: false,
+                tags: ["bánh ngọt", "công thức"],
+                icon: "fas fa-birthday-cake"
+            }
+        ];
+
+        let filteredResources = [...resourcesData];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayFeaturedResources();
+            displayAllResources();
+            initializeEventListeners();
+        });
+
+        function initializeEventListeners() {
+            document.getElementById('main-search').addEventListener('input', filterResources);
+            document.getElementById('category-filter').addEventListener('change', filterResources);
+            document.getElementById('type-filter').addEventListener('change', filterResources);
+            document.getElementById('sort-by').addEventListener('change', sortResources);
+        }
+
+        function displayFeaturedResources() {
+            const featured = resourcesData.filter(resource => resource.featured);
+            const container = document.getElementById('featured-resources');
+            container.innerHTML = featured.map(resource => createResourceCard(resource, true)).join('');
+        }
+
+        function displayAllResources() {
+            const container = document.getElementById('all-resources');
+            container.innerHTML = filteredResources.map(resource => createResourceCard(resource, false)).join('');
+            document.getElementById('resource-count').textContent = `Hiển thị 1-${filteredResources.length} của ${resourcesData.length} tài nguyên`;
+        }
+
+        function createResourceCard(resource, isFeatured = false) {
+            const typeColors = {
+                pdf: 'bg-red-100 text-red-800',
+                video: 'bg-blue-100 text-blue-800',
+                interactive: 'bg-green-100 text-green-800',
+                simulation: 'bg-purple-100 text-purple-800'
+            };
+
+            return `
+                <div class="resource-card rounded-xl p-6 hover-lift ${isFeatured ? 'border-2 border-blue-200' : ''}">
+                    ${isFeatured ? '<div class="flex items-center justify-between mb-4"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Nổi Bật</span><div class="flex items-center text-yellow-500"><i class="fas fa-star text-sm mr-1"></i><span class="text-sm">${resource.rating}</span></div></div>' : ''}
+                    
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="${resource.icon} text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800 mb-1 line-clamp-2">${resource.title}</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">${resource.description}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2 py-1 ${typeColors[resource.type]} rounded-full text-xs font-medium">
+                            ${resource.type.toUpperCase()}
+                        </span>
+                        <span class="text-xs text-gray-500">${resource.size}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                        <span><i class="fas fa-download mr-1"></i>${resource.downloads}</span>
+                        ${!isFeatured ? '<div class="flex items-center text-yellow-500"><i class="fas fa-star text-sm mr-1"></i><span>' + resource.rating + '</span></div>' : ''}
+                    </div>
+
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        ${resource.tags.slice(0, 2).map(tag => `
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">${tag}</span>
+                        `).join('')}
+                    </div>
+
+                    <div class="flex space-x-2">
+                        <button onclick="previewResource(${resource.id})" 
+                                class="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg text-sm hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-eye mr-1"></i>Xem Trước
+                        </button>
+                        <button onclick="downloadResource(${resource.id})" 
+                                class="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm hover:bg-green-600 transition-colors">
+                            <i class="fas fa-download mr-1"></i>Tải Xuống
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterResources() {
+            const searchTerm = document.getElementById('main-search').value.toLowerCase();
+            const category = document.getElementById('category-filter').value;
+            const type = document.getElementById('type-filter').value;
+
+            filteredResources = resourcesData.filter(resource => {
+                const matchesSearch = resource.title.toLowerCase().includes(searchTerm) ||
+                                    resource.description.toLowerCase().includes(searchTerm) ||
+                                    resource.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                const matchesCategory = category === 'all' || resource.category === category;
+                const matchesType = type === 'all' || resource.type === type;
+
+                return matchesSearch && matchesCategory && matchesType;
+            });
+
+            displayAllResources();
+        }
+
+        function sortResources() {
+            const sortBy = document.getElementById('sort-by').value;
+            
+            filteredResources.sort((a, b) => {
+                switch (sortBy) {
+                    case 'newest':
+                        return b.id - a.id;
+                    case 'popular':
+                        return b.downloads - a.downloads;
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'name':
+                        return a.title.localeCompare(b.title);
+                    default:
+                        return 0;
+                }
+            });
+
+            displayAllResources();
+        }
+
+        function searchByTag(tag) {
+            document.getElementById('main-search').value = tag;
+            filterResources();
+        }
+
+        function previewResource(resourceId) {
+            const resource = resourcesData.find(r => r.id === resourceId);
+            showNotification(`Đang mở xem trước: ${resource.title}`);
+        }
+
+        function downloadResource(resourceId) {
+            const resource = resourcesData.find(r => r.id === resourceId);
+            showNotification(`Đang tải xuống: ${resource.title}`);
+            
+            // Simulate download progress
+            setTimeout(() => {
+                showNotification(`Đã tải xong: ${resource.title}`);
+                // Update download count
+                resource.downloads++;
+                displayAllResources();
+            }, 2000);
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
